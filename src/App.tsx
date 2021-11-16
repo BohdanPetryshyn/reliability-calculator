@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Box, Container } from "@mui/material";
+import { LambdasInput } from "./LambdasInput";
 
 function App() {
+  const [lambdas, setLambdas] = React.useState<number[]>([
+    5 * 10 ** -4,
+    4 * 10 ** -4,
+    3 * 10 ** -4,
+    2.5 * 10 ** -4,
+    5 * 10 ** -4,
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Box p={2}>
+        <LambdasInput lambdas={lambdas} onLambdasChange={setLambdas} />
+      </Box>
+    </Container>
   );
 }
 
