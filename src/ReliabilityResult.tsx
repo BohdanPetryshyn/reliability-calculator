@@ -60,7 +60,7 @@ export function ReliabilityResult({
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <Typography variant="h6">Reliabilities:</Typography>
+        <Typography variant="h6">Reliabilities</Typography>
         {probabilities.map((p, i) => (
           <Typography variant="body1" key={i}>{`P[${i}] = ${p}`}</Typography>
         ))}

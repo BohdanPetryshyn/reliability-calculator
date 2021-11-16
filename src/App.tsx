@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Container, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { LambdasInput } from "./LambdasInput";
 import { ReliabilityResult } from "./ReliabilityResult";
+import { MomentInput } from "./MomentInput";
 
 function App() {
   const [lambdas, setLambdas] = React.useState<number[]>([
@@ -11,6 +12,7 @@ function App() {
     2.5 * 10 ** -4,
     5 * 10 ** -4,
   ]);
+  const [moment, setMoment] = React.useState(1);
 
   return (
     <Container>
@@ -19,7 +21,10 @@ function App() {
           <LambdasInput lambdas={lambdas} onLambdasChange={setLambdas} />
         </Grid>
         <Grid item xs={12}>
-          <ReliabilityResult lambdas={lambdas} moment={10} />
+          <MomentInput moment={moment} onMomentChange={setMoment} />
+        </Grid>
+        <Grid item xs={12}>
+          <ReliabilityResult lambdas={lambdas} moment={moment} />
         </Grid>
       </Grid>
     </Container>

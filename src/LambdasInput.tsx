@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 
 export interface LambdasInputProps {
   lambdas: number[];
@@ -19,9 +19,6 @@ export function LambdasInput({ lambdas, onLambdasChange }: LambdasInputProps) {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h6">Lambdas:</Typography>
-        </Grid>
         <Grid item>
           <TextField
             label="Lambda 1"
