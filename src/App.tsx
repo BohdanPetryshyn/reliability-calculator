@@ -12,7 +12,7 @@ function App() {
     2.5 * 10 ** -4,
     5 * 10 ** -4,
   ]);
-  const [moment, setMoment] = React.useState(1);
+  const [moment, setMoment] = React.useState<number | undefined>(1);
 
   return (
     <Container>
@@ -24,7 +24,10 @@ function App() {
           <MomentInput moment={moment} onMomentChange={setMoment} />
         </Grid>
         <Grid item xs={12}>
-          <ReliabilityResult lambdas={lambdas} moment={moment} />
+          <ReliabilityResult
+            lambdas={lambdas}
+            moment={moment && moment >= 0 ? moment : 0}
+          />
         </Grid>
       </Grid>
     </Container>

@@ -45,7 +45,7 @@ export function ReliabilityResult({
   const probabilitiesByMoment = rungeKutta(
     equations,
     INITIAL_PROBABILITIES,
-    [0, moment],
+    [0, moment || 1],
     1
   ) as number[][];
   const probabilities = probabilitiesByMoment[moment];
