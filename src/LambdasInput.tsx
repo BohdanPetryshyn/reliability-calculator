@@ -16,49 +16,23 @@ export function LambdasInput({ lambdas, onLambdasChange }: LambdasInputProps) {
         ...lambdas.slice(index + 1),
       ]);
 
+  const renderLambda = (index: number) => (
+    <TextField
+      label={`Lambda ${index}`}
+      type="number"
+      value={[lambdas[index]]}
+      onChange={getChangeHandler(index)}
+    />
+  );
+
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item>
-          <TextField
-            label="Lambda 1"
-            type="number"
-            value={[lambdas[0]]}
-            onChange={getChangeHandler(0)}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            label="Lambda 2"
-            type="number"
-            value={[lambdas[1]]}
-            onChange={getChangeHandler(1)}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            label="Lambda 3"
-            type="number"
-            value={[lambdas[2]]}
-            onChange={getChangeHandler(2)}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            label="Lambda 4"
-            type="number"
-            value={[lambdas[3]]}
-            onChange={getChangeHandler(3)}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            label="Lambda 5"
-            type="number"
-            value={[lambdas[4]]}
-            onChange={getChangeHandler(4)}
-          />
-        </Grid>
+        {[...new Array(5).keys()].map((i) => (
+          <Grid item key={i}>
+            {renderLambda(i)}
+          </Grid>
+        ))}
       </Grid>
     </>
   );
