@@ -6,13 +6,9 @@ import { MomentInput } from "./MomentInput";
 
 function App() {
   const [lambdas, setLambdas] = React.useState<number[]>([
-    5 * 10 ** -4,
-    4 * 10 ** -4,
-    3 * 10 ** -4,
-    2.5 * 10 ** -4,
-    5 * 10 ** -4,
+    0.0005, 0.0004, 0.0003, 0.00025, 0.0005,
   ]);
-  const [moment, setMoment] = React.useState<number | undefined>(1);
+  const [moment, setMoment] = React.useState<number>(1);
 
   return (
     <Container>
@@ -24,10 +20,7 @@ function App() {
           <MomentInput moment={moment} onMomentChange={setMoment} />
         </Grid>
         <Grid item xs={12}>
-          <ReliabilityResult
-            lambdas={lambdas}
-            moment={moment && moment >= 0 ? moment : 0}
-          />
+          <ReliabilityResult lambdas={lambdas} moment={moment} />
         </Grid>
       </Grid>
     </Container>

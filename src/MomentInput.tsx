@@ -1,17 +1,17 @@
 import { TextField } from "@mui/material";
 
 export interface MomentInputProps {
-  moment?: number;
-  onMomentChange: (moment?: number) => void;
+  moment: number;
+  onMomentChange: (moment: number) => void;
 }
 
 export function MomentInput({ moment, onMomentChange }: MomentInputProps) {
   const onChange = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    const value = event.target.value;
-    const moment = value ? Number(value) : undefined;
-    onMomentChange(moment);
+    const numberValue = Number(event.target.value);
+    const normalizedValue = numberValue >= 0 ? numberValue : 0;
+    onMomentChange(normalizedValue);
   };
 
   return (
@@ -20,7 +20,6 @@ export function MomentInput({ moment, onMomentChange }: MomentInputProps) {
       type="number"
       value={moment}
       onChange={onChange}
-      error={!moment || moment < 0}
     />
   );
 }

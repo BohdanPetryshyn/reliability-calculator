@@ -9,18 +9,22 @@ export interface LambdasInputProps {
 export function LambdasInput({ lambdas, onLambdasChange }: LambdasInputProps) {
   const getChangeHandler =
     (index: number) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      onLambdasChange([
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const numberValue = Number(event.target.value);
+      const normalizedValue = numberValue >= 0 ? numberValue : 0;
+
+      return onLambdasChange([
         ...lambdas.slice(0, index),
-        Number(event.target.value),
+        normalizedValue,
         ...lambdas.slice(index + 1),
       ]);
+    };
 
   const renderLambda = (index: number) => (
     <TextField
       label={`Lambda ${index}`}
       type="number"
-      value={[lambdas[index]]}
+      value={lambdas[index]}
       onChange={getChangeHandler(index)}
     />
   );
