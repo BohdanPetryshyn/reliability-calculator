@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Switch } from "@mui/material";
+import { Container, Grid, Switch, Typography } from "@mui/material";
 import { IntensityInput } from "./IntensityInput";
 import { ReliabilityResult } from "./ReliabilityResult";
 import { MomentInput } from "./MomentInput";
@@ -19,6 +19,8 @@ function App() {
     <Container>
       <Grid container spacing={2} mt={1}>
         <Grid item xs={12}>
+          <Typography variant="h6">Renewals</Typography>
+
           <Switch
             defaultChecked
             value={renewable}
@@ -29,6 +31,9 @@ function App() {
           />
         </Grid>
         <Grid item xs={12}>
+          <Typography variant="h6" mb={2}>
+            Failure intensity
+          </Typography>
           <IntensityInput
             intensity={failureIntensity}
             onIntensityChange={setFailureIntensity}
@@ -36,6 +41,9 @@ function App() {
         </Grid>
         {renewable && (
           <Grid item xs={12}>
+            <Typography variant="h6" mb={2}>
+              Renewal intensity
+            </Typography>
             <IntensityInput
               intensity={renewalIntensity}
               onIntensityChange={setRenewalIntensity}

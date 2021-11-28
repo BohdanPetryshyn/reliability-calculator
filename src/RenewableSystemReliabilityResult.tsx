@@ -1,10 +1,14 @@
 import { Grid, Typography } from "@mui/material";
 import rungeKutta from "runge-kutta";
 
-const INITIAL_PROBABILITIES = [1, ...new Array(71).fill(0)];
+const INITIAL_PROBABILITIES = [1, ...new Array(95).fill(0)];
 const FAILURE_STATES = [
-  5, 7, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 21, 23, 24,
+  5, 7, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 21, 23, 24, 29, 31, 33, 35,
+  36, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 55, 57, 59, 60, 62, 63, 64,
+  65, 66, 67, 68, 69, 70, 71, 77, 81, 83, 84, 86, 87, 88, 89, 90, 91, 92, 93,
+  94, 95,
 ];
+const PERMANENT_FAILURE_STATES = [79];
 
 export interface RenewableSystemReliabilityCalculatorProps {
   lambdas: number[];
@@ -120,7 +124,7 @@ export function RenewableSystemReliabilityCalculator({
       m[3] * P[37] +
       m[4] * P[38] +
       m[0] * P[7] -
-      (l[0] + l[1] + l[3] + l[4]) * P[27],
+      (l[0] + l[1] + l[3] + l[4] + m[2]) * P[27],
     /* 28 */ 0 +
       l[3] * P[24] +
       m[1] * P[35] +
@@ -139,7 +143,12 @@ export function RenewableSystemReliabilityCalculator({
       m[3] * P[41] +
       m[4] * P[42] -
       (l[2] + l[3] + l[4] + m[1]) * P[30],
-    /* 31 */ 0 + l[2] * P[25] + l[0] * P[27] + m[1] * P[40] + m[3] * P[43],
+    /* 31 */ 0 +
+      l[2] * P[25] +
+      l[0] * P[27] +
+      m[1] * P[40] +
+      m[3] * P[43] -
+      m[2] * P[31],
     /* 32 */ 0 +
       l[3] * P[25] +
       l[0] * P[28] +
@@ -153,7 +162,7 @@ export function RenewableSystemReliabilityCalculator({
       m[3] * P[45] +
       m[4] * P[46] +
       m[0] * P[16] -
-      (l[0] + l[3] + l[4] + m[1]) * P[34],
+      (l[0] + l[3] + l[4] + m[1] + m[2]) * P[34],
     /* 35 */ 0 +
       l[3] * P[26] +
       l[1] * P[28] +
@@ -166,17 +175,21 @@ export function RenewableSystemReliabilityCalculator({
       m[1] * P[45] +
       m[4] * P[47] +
       m[0] * P[19] -
-      (l[0] + l[1] + l[4] + m[3]) * P[37],
-    /* 38 */ 0 + l[4] * P[27] + m[1] * P[46] + m[3] * P[47] - m[4] * P[38],
+      (l[0] + l[1] + l[4] + m[3] + m[2]) * P[37],
+    /* 38 */ 0 +
+      l[4] * P[27] +
+      m[1] * P[46] +
+      m[3] * P[47] -
+      (m[4] + m[2]) * P[38],
     /* 39 */ l[4] * P[28] + m[0] * P[20] - (m[3] + m[4]) * P[39],
-    /* 40 */ l[2] * P[30] + l[0] * P[34] - m[1] * P[40],
+    /* 40 */ l[2] * P[30] + l[0] * P[34] - (m[1] + m[2]) * P[40],
     /* 41 */ l[3] * P[30] + l[1] * P[32] - (m[1] + m[3]) * P[41],
     /* 42 */ l[4] * P[30] - (m[1] + m[4]) * P[42],
-    /* 43 */ l[2] * P[32] + l[0] * P[37] - m[3] * P[43],
+    /* 43 */ l[2] * P[32] + l[0] * P[37] - (m[3] + m[2]) * P[43],
     /* 44 */ l[4] * P[32] - (m[3] + m[4]) * P[44],
-    /* 45 */ l[3] * P[34] + l[1] * P[37] - (m[1] + m[3]) * P[45],
-    /* 46 */ l[4] * P[34] - (m[1] + m[4]) * P[46],
-    /* 47 */ l[4] * P[37] - (m[3] + m[4]) * P[47],
+    /* 45 */ l[3] * P[34] + l[1] * P[37] - (m[1] + m[3] + m[2]) * P[45],
+    /* 46 */ l[4] * P[34] - (m[1] + m[4] + m[2]) * P[46],
+    /* 47 */ l[4] * P[37] - (m[3] + m[4] + m[2]) * P[47],
     /* 48 */ 0 +
       m[1] * P[50] +
       m[3] * P[52] +
@@ -189,7 +202,7 @@ export function RenewableSystemReliabilityCalculator({
       m[3] * P[56] +
       m[4] * P[57] +
       m[2] * P[7] -
-      (l[1] + l[2] + l[3] + l[4]) * P[49],
+      (l[1] + l[2] + l[3] + l[4] + m[0]) * P[49],
     /* 50 */ 0 +
       l[1] * P[48] +
       m[3] * P[59] +
@@ -220,16 +233,25 @@ export function RenewableSystemReliabilityCalculator({
       m[3] * P[65] +
       m[4] * P[66] +
       m[2] * P[16] -
-      (l[2] + l[3] + l[4] + m[1]) * P[54],
-    /* 55 */ 0 + l[2] * P[49] + l[0] * P[51] + m[1] * P[64] + m[3] * P[67],
+      (l[2] + l[3] + l[4] + m[1] + m[0]) * P[54],
+    /* 55 */ 0 +
+      l[2] * P[49] +
+      l[0] * P[51] +
+      m[1] * P[64] +
+      m[3] * P[67] -
+      m[0] * P[55],
     /* 56 */ 0 +
       l[3] * P[49] +
       l[0] * P[52] +
       m[1] * P[65] +
       m[4] * P[68] +
       m[2] * P[19] -
-      (l[1] + l[2] + l[4] + m[3]) * P[56],
-    /* 57 */ 0 + l[4] * P[49] + m[1] * P[66] + m[3] * P[68] - m[4] * P[57],
+      (l[1] + l[2] + l[4] + m[3] + m[0]) * P[56],
+    /* 57 */ 0 +
+      l[4] * P[49] +
+      m[1] * P[66] +
+      m[3] * P[68] -
+      (m[4] + m[0]) * P[57],
     /* 58 */ 0 +
       l[2] * P[50] +
       l[1] * P[51] +
@@ -250,14 +272,107 @@ export function RenewableSystemReliabilityCalculator({
       (l[0] + l[1] + l[4] + m[3]) * P[61],
     /* 62 */ 0 + l[4] * P[51] + m[1] * P[70] + m[3] * P[71] - m[4] * P[62],
     /* 63 */ l[4] * P[52] + m[2] * P[23] - (m[3] + m[4]) * P[63],
-    /* 64 */ l[2] * P[54] + l[0] * P[58] - m[1] * P[64],
-    /* 65 */ l[3] * P[54] + l[1] * P[56] - (m[1] + m[3]) * P[65],
-    /* 66 */ l[4] * P[54] - (m[1] + m[4]) * P[66],
-    /* 67 */ l[2] * P[56] + l[0] * P[61] - m[3] * P[67],
-    /* 68 */ l[4] * P[56] - (m[3] + m[4]) * P[68],
+    /* 64 */ l[2] * P[54] + l[0] * P[58] - (m[1] + m[0]) * P[64],
+    /* 65 */ l[3] * P[54] + l[1] * P[56] - (m[1] + m[3] + m[0]) * P[65],
+    /* 66 */ l[4] * P[54] - (m[1] + m[4] + m[0]) * P[66],
+    /* 67 */ l[2] * P[56] + l[0] * P[61] - (m[3] + m[0]) * P[67],
+    /* 68 */ l[4] * P[56] - (m[3] + m[4] + m[0]) * P[68],
     /* 69 */ l[3] * P[58] + l[1] * P[61] - (m[1] + m[3]) * P[69],
     /* 70 */ l[4] * P[58] - (m[1] + m[4]) * P[70],
     /* 71 */ l[4] * P[61] - (m[3] + m[4]) * P[71],
+    /* 72 */ 0 +
+      m[1] * P[74] +
+      m[3] * P[76] +
+      m[4] * P[77] +
+      m[2] * P[27] +
+      m[0] * P[49] -
+      (l[0] + l[1] + l[2] + l[3] + l[4]) * P[72],
+    /* 73 */ 0 +
+      l[0] * P[72] +
+      m[1] * P[78] +
+      m[3] * P[80] +
+      m[4] * P[81] +
+      m[2] * P[31] -
+      (l[1] + l[2] + l[3] + l[4]) * P[73],
+    /* 74 */ 0 +
+      l[1] * P[72] +
+      m[3] * P[83] +
+      m[4] * P[84] +
+      m[2] * P[34] +
+      m[0] * P[54] -
+      (l[0] + l[2] + l[3] + l[4] + m[1]) * P[74],
+    /* 75 */ 0 +
+      l[2] * P[72] +
+      m[1] * P[82] +
+      m[3] * P[85] +
+      m[4] * P[86] +
+      m[0] * P[55] -
+      (l[0] + l[1] + l[3] + l[4]) * P[75],
+    /* 76 */ 0 +
+      l[3] * P[72] +
+      m[1] * P[83] +
+      m[4] * P[87] +
+      m[2] * P[37] +
+      m[0] * P[56] -
+      (l[0] + l[1] + l[2] + l[4] + m[3]) * P[76],
+    /* 77 */ 0 +
+      l[4] * P[72] +
+      m[1] * P[84] +
+      m[3] * P[87] +
+      m[2] * P[38] +
+      m[0] * P[57] -
+      m[4] * P[77],
+    /* 78 */ 0 +
+      l[1] * P[73] +
+      l[0] * P[74] +
+      m[3] * P[89] +
+      m[4] * P[90] +
+      m[2] * P[40] -
+      (l[2] + l[3] + l[4] + m[1]) * P[78],
+    /* 79 */ 0 + l[2] * P[73] + l[0] * P[75] + m[1] * P[88] + m[3] * P[91],
+    /* 80 */ 0 +
+      l[3] * P[73] +
+      l[0] * P[76] +
+      m[1] * P[89] +
+      m[4] * P[92] +
+      m[2] * P[43] -
+      (l[1] + l[2] + l[4] + m[3]) * P[80],
+    /* 81 */ 0 + l[4] * P[73] + m[1] * P[90] + m[3] * P[92] - m[4] * P[81],
+    /* 82 */ 0 +
+      l[2] * P[74] +
+      l[1] * P[75] +
+      m[3] * P[93] +
+      m[4] * P[94] +
+      m[0] * P[64] -
+      (l[0] + l[3] + l[4] + m[1]) * P[82],
+    /* 83 */ 0 +
+      l[3] * P[74] +
+      l[1] * P[76] +
+      m[2] * P[45] +
+      m[0] * P[65] -
+      (m[1] + m[3]) * P[83],
+    /* 84 */ 0 +
+      l[4] * P[74] +
+      m[2] * P[46] +
+      m[0] * P[66] -
+      (m[1] + m[4]) * P[84],
+    /* 85 */ 0 +
+      l[3] * P[75] +
+      l[2] * P[76] +
+      m[1] * P[93] +
+      m[4] * P[95] +
+      m[0] * P[67] -
+      (l[0] + l[1] + l[4] + m[3]) * P[85],
+    /* 86 */ 0 + l[4] * P[75] + m[1] * P[94] + m[3] * P[95] - m[4] * P[86],
+    /* 87 */ l[4] * P[76] + m[2] * P[47] + m[0] * P[68] - (m[3] + m[4]) * P[87],
+    /* 88 */ l[2] * P[78] + l[0] * P[82] - m[1] * P[88],
+    /* 89 */ l[3] * P[78] + l[1] * P[80] - (m[1] + m[3]) * P[89],
+    /* 90 */ l[4] * P[78] - (m[1] + m[4]) * P[90],
+    /* 91 */ l[2] * P[80] + l[0] * P[85] - m[3] * P[91],
+    /* 92 */ l[4] * P[80] - (m[3] + m[4]) * P[92],
+    /* 93 */ l[3] * P[82] + l[1] * P[85] - (m[1] + m[3]) * P[93],
+    /* 94 */ l[4] * P[82] - (m[1] + m[4]) * P[94],
+    /* 95 */ l[4] * P[85] - (m[3] + m[4]) * P[95],
   ];
 
   const probabilitiesByMoment = rungeKutta(
@@ -270,10 +385,16 @@ export function RenewableSystemReliabilityCalculator({
 
   const totalProbability = probabilities.reduce((sum, p) => sum + p, 0);
 
-  const failureProbability = probabilities
+  const temporaryFailureProbability = probabilities
     .filter((p, i) => FAILURE_STATES.includes(i))
     .reduce((sum, p) => sum + p, 0);
-  const serviceabilityProbability = totalProbability - failureProbability;
+  const permanentFailureProbability = probabilities
+    .filter((p, i) => PERMANENT_FAILURE_STATES.includes(i))
+    .reduce((sum, p) => sum + p, 0);
+  const serviceabilityProbability =
+    totalProbability -
+    temporaryFailureProbability -
+    permanentFailureProbability;
 
   return (
     <Grid container spacing={2}>
@@ -284,8 +405,10 @@ export function RenewableSystemReliabilityCalculator({
         ))}
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="h6">Failure probability</Typography>
-        <Typography variant="body1">{failureProbability}</Typography>
+        <Typography variant="h6">Temporary failure probability</Typography>
+        <Typography variant="body1">{temporaryFailureProbability}</Typography>
+        <Typography variant="h6">Permanent failure probability</Typography>
+        <Typography variant="body1">{permanentFailureProbability}</Typography>
         <Typography variant="h6">Serviceability probability</Typography>
         <Typography variant="body1">{serviceabilityProbability}</Typography>
         <Typography variant="h6">Total probability</Typography>
